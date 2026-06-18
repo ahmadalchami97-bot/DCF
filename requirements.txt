@@ -1,0 +1,2 @@
+# Core dependency: workbook generation with live Excel formulas.
+openpyxl>=3.1,<4.0

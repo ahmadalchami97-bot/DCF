@@ -1,0 +1,124 @@
+"""
+Cover sheet -- title page, headline panel, navigation and quick-start guide.
+
+Built last so it can link the headline valuation from the Dashboard/DCF. Provides
+an at-a-glance summary, a clickable table of contents, the colour legend and a
+short "how to use" so a new user can drive the model in minutes.
+"""
+
+from __future__ import annotations
+
+from datetime import date
+
+from ..config import APP_NAME, APP_VERSION, Fmt, SHEET_ORDER
+from . import common
+
+LAST = 7
+
+_TOC = {
+    "Inputs": "Data-entry layer — paste income statement, balance sheet, cash flow & market data",
+    "Historical": "Ratios, margins, growth, returns & cash flow, each with a plain-English read",
+    "Assumptions": "Driver-based DCF assumption engine + Base/Bull/Bear/Downside scenario selector",
+    "WACC": "Discount rate built up step by step (CAPM cost of equity, after-tax cost of debt)",
+    "Forecast": "Driver-based operating forecast & unlevered free cash flow (active scenario)",
+    "DCF": "Discounted cash flow: discounting, terminal value, EV→equity bridge, value per share",
+    "Sensitivity": "Two-way heat-maps: WACC×growth, WACC×exit multiple, growth×margin",
+    "Scenario": "Four full DCF runs side by side — base, bull, bear and downside stress",
+    "Checks": "Automated integrity, sanity and data-gap diagnostics (PASS / REVIEW / FAIL)",
+    "Dashboard": "One-page investment tearsheet — the summary view",
+    "Conclusion": "Written investment thesis: drivers, risks, swing assumptions and stance",
+}
+
+_HOWTO = [
+    "1.  Go to the Inputs sheet and replace the yellow cells with the company's figures "
+    "(at least revenue and equity; the more you fill, the deeper the analysis).",
+    "2.  Enter market data (price, shares, beta, rates) for the WACC and per-share value — "
+    "or leave blank to use clearly-labelled fallback defaults.",
+    "3.  Review the Assumptions sheet; the base case is derived from history. Adjust if you "
+    "have a different view, and pick a scenario (1–4) with the selector.",
+    "4.  Read the Dashboard and Conclusion. Use Sensitivity and Scenario to stress the call. "
+    "Check the Checks sheet for any data flags.",
+]
+
+
+def build(sh, ctx: common.Context):
+    refs = ctx.refs
+    Dk = lambda k: refs.ref(f"dcf.{k}")     # noqa: E731
+    I = lambda k: refs.ref(f"in.{k}")       # noqa: E731
+
+    sh.hide_gridlines()
+    sh.col_width(1, 30)
+    for c in range(2, LAST + 1):
+        sh.col_width(c, 13)
+
+    # title
+    sh.merge(1, 1, 1, LAST)
+    sh.put(1, 1, APP_NAME, role="title")
+    sh.row_height(1, 34)
+    sh.merge(2, 1, 2, LAST)
+    sh.put(2, 1, common.money_units_note(ctx) + f"   ·   v{APP_VERSION}", role="subtitle")
+    sh.row_height(2, 16)
+    r = 4
+
+    # company line
+    sh.put(r, 1, "Company", role="label")
+    sh.put(r, 2, f"={I('name')}", role="link", align="l")
+    sh.merge(r, 2, r, LAST)
+    r += 1
+    sh.put(r, 1, "Ticker / type", role="label")
+    sh.put(r, 2, f'={I("ticker")}&"   ·   "&{I("business_type")}', role="link", align="l")
+    sh.merge(r, 2, r, LAST)
+    r += 2
+
+    # headline panel
+    r = common.section(sh, r, "Headline", c1=1, c2=LAST)
+    panel = [
+        ("DCF value per share", f"={Dk('value_per_share')}", Fmt.PER_SHARE, "result"),
+        ("Current share price", f"={Dk('current_price')}", Fmt.PER_SHARE, "link"),
+        ("Upside / (downside)", f"={Dk('upside')}", Fmt.PCT, "output"),
+        ("WACC", f"={refs.ref('wacc.value')}", Fmt.PCT2, "link"),
+    ]
+    for i, (label, val, fmt, role) in enumerate(panel):
+        cc = 1 + i * 2 if i < 2 else 1 + (i - 2) * 2
+        rr = r if i < 2 else r + 1
+        sh.put(rr, cc, label, role="label")
+        sh.put(rr, cc + 1, val, role=role, fmt=fmt)
+    sh.put(r, 5, "Valuation read", role="label")
+    sh.put(r, 6, f"={Dk('val_label')}", role="link", align="c")
+    sh.merge(r, 6, r, LAST)
+    common.add_label_coloring(sh, f"{sh.coord(r,6)}:{sh.coord(r,6)}", sh.coord(r, 6))
+    sh.put(r + 1, 5, "Data health", role="label")
+    sh.put(r + 1, 6, f"={refs.ref('chk.verdict')}", role="link", align="c")
+    sh.merge(r + 1, 6, r + 1, LAST)
+    common.add_label_coloring(sh, f"{sh.coord(r+1,6)}:{sh.coord(r+1,6)}", sh.coord(r + 1, 6))
+    r += 3
+
+    # table of contents (clickable)
+    r = common.section(sh, r, "Contents", c1=1, c2=LAST)
+    for name in SHEET_ORDER:
+        if name == "Cover":
+            continue
+        c = sh.put(r, 1, name, role="link", align="l")
+        c.hyperlink = f"#'{name}'!A1"
+        sh.put(r, 2, _TOC.get(name, ""), role="note")
+        sh.merge(r, 2, r, LAST)
+        r += 1
+    r += 1
+
+    # legend
+    common.legend_block(sh, r)
+    r += 7
+
+    # how to use
+    r = common.section(sh, r, "How to Use", c1=1, c2=LAST)
+    for line in _HOWTO:
+        sh.put(r, 1, line, role="note", align="ltw")
+        sh.merge(r, 1, r, LAST)
+        sh.row_height(r, 28)
+        r += 1
+    r += 1
+    sh.put(r, 1, f"Generated by {APP_NAME} v{APP_VERSION} on {date.today():%d %b %Y}. "
+                 "Illustrative analytical tool — not investment advice.", role="note")
+    sh.merge(r, 1, r, LAST)
+    sh.freeze("A3")
+    return sh

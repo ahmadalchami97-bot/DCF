@@ -432,9 +432,43 @@ class Evaluator:
                 return float(max(nums))
             if name == "MIN":
                 return float(min(nums))
+        if name == "MEDIAN":
+            nums = self._collect_numbers(args, sheet)
+            if isinstance(nums, XlError):
+                return nums
+            if not nums:
+                return ERR_NUM
+            s = sorted(nums)
+            mid = len(s) // 2
+            return s[mid] if len(s) % 2 else (s[mid - 1] + s[mid]) / 2
+        if name == "RANK":
+            num = _to_num(self._eval(args[0], sheet))
+            rng = self._eval(args[1], sheet)
+            vals = [x for x in (rng[1] if (isinstance(rng, tuple) and rng[0] == "array") else [rng])
+                    if isinstance(x, float)]
+            order = 0.0 if len(args) < 3 else _to_num(self._eval(args[2], sheet))
+            if isinstance(num, XlError):
+                return num
+            if order and order != 0:
+                return float(1 + sum(1 for v in vals if v < num))
+            return float(1 + sum(1 for v in vals if v > num))
         if name == "ABS":
             n = _to_num(self._eval(args[0], sheet))
             return n if isinstance(n, XlError) else abs(n)
+        if name in ("TODAY", "NOW"):
+            return 46000.0  # a fixed date serial; value irrelevant to verification
+        if name == "SIGN":
+            n = _to_num(self._eval(args[0], sheet))
+            if isinstance(n, XlError):
+                return n
+            return float((n > 0) - (n < 0))
+        if name == "REPT":
+            txt = self._eval(args[0], sheet)
+            cnt = _to_num(self._eval(args[1], sheet))
+            if isinstance(cnt, XlError):
+                return cnt
+            txt = "" if txt is BLANK else _to_text(txt)
+            return txt * max(0, int(cnt))
         if name == "ROUND":
             n = _to_num(self._eval(args[0], sheet))
             d = _to_num(self._eval(args[1], sheet))

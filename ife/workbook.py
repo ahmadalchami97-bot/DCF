@@ -1,4 +1,4 @@
-"""Orchestrator for the ratio-analysis workbook."""
+"""Orchestrator for the Institutional Forecasting Engine workbook."""
 
 from __future__ import annotations
 
@@ -12,29 +12,21 @@ from .config import Palette, SHEET_ORDER
 from .sample_data import build_sample
 from .style import apply as _styler
 
-# Built in dependency order: Home registers identity inputs; Inputs feeds every
-# analysis sheet; the Dashboard and Quality Control aggregate, so they come last.
+# Dependency order: Historical feeds Analysis & Assumptions; Assumptions +
+# Historical feed the Forecast; Forecast feeds Bridge/Diagnostics/Scenario/
+# Sensitivity; the Dashboard aggregates last.
 BUILD_ORDER = [
-    "Home", "Inputs", "Common Size", "Profitability", "Liquidity", "Solvency",
-    "Efficiency", "Growth", "Valuation", "Capital Allocation", "Quality",
-    "Benchmarking", "Guide", "Quality Control", "Dashboard",
+    "Historical", "Analysis", "Assumptions", "Forecast", "Bridge",
+    "Diagnostics", "Scenario", "Sensitivity", "Notes", "Dashboard",
 ]
-
 _MODULE = {
-    "Home": "home", "Dashboard": "dashboard", "Inputs": "inputs",
-    "Common Size": "common_size", "Profitability": "profitability",
-    "Liquidity": "liquidity", "Solvency": "solvency", "Efficiency": "efficiency",
-    "Growth": "growth", "Valuation": "valuation",
-    "Capital Allocation": "capital_allocation", "Quality": "quality",
-    "Benchmarking": "benchmarking", "Guide": "interpretation",
-    "Quality Control": "quality_control",
+    "Dashboard": "dashboard", "Historical": "historical", "Analysis": "analysis",
+    "Assumptions": "assumptions", "Forecast": "forecast", "Bridge": "bridge",
+    "Diagnostics": "diagnostics", "Scenario": "scenario", "Sensitivity": "sensitivity",
+    "Notes": "notes",
 }
-
-_TAB_COLORS = {
-    "Home": Palette.TITLE, "Dashboard": "1E7B34", "Inputs": "C9A227",
-    "Guide": Palette.SECTION, "Quality Control": "9C1A1A",
-}
-_DEFAULT_TAB = Palette.SUBHEADER
+_TABS = {"Dashboard": "404040", "Historical": "1F6FB2", "Assumptions": "0000FF",
+         "Forecast": "006100", "Diagnostics": "C00000"}
 
 
 def assemble(data: dict | None = None):
@@ -46,7 +38,7 @@ def assemble(data: dict | None = None):
     for name in SHEET_ORDER:
         ctx.sheets[name] = Sheet(wb.create_sheet(title=name), refs, styler=_styler)
     for name in BUILD_ORDER:
-        importlib.import_module(f".sheets.{_MODULE[name]}", package="ratios").build(
+        importlib.import_module(f".sheets.{_MODULE[name]}", package="ife").build(
             ctx.sheets[name], ctx)
     wb._sheets.sort(key=lambda ws: SHEET_ORDER.index(ws.title))
     wb.active = SHEET_ORDER.index("Dashboard")
@@ -63,7 +55,7 @@ def build_workbook(output_path: str, data: dict | None = None) -> str:
 def _polish(wb, data):
     from openpyxl.worksheet.properties import PageSetupProperties
     for ws in wb.worksheets:
-        ws.sheet_properties.tabColor = _TAB_COLORS.get(ws.title, _DEFAULT_TAB)
+        ws.sheet_properties.tabColor = _TABS.get(ws.title, Palette.SUBHEADER)
         ws.sheet_view.showGridLines = False
         ws.page_setup.orientation = "landscape"
         ws.page_setup.fitToWidth = 1
@@ -71,5 +63,5 @@ def _polish(wb, data):
         ws.sheet_properties.pageSetUpPr = PageSetupProperties(fitToPage=True)
         ws.oddFooter.right.text = "&A  ·  page &P of &N"
     from .config import APP_NAME, APP_VERSION
-    wb.properties.title = f"{data['meta'].get('name','Company')} — Ratio Analysis"
+    wb.properties.title = f"{data['meta'].get('name','Company')} — Forecasting Engine"
     wb.properties.creator = f"{APP_NAME} v{APP_VERSION}"

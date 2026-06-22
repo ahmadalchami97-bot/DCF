@@ -99,10 +99,12 @@ class Sheet:
     place a value *and* expose it to other sheets in one call.
     """
 
-    def __init__(self, ws, refs: Refs):
+    def __init__(self, ws, refs: Refs, styler=None):
         self.ws = ws
         self.refs = refs
         self.name = ws.title
+        # which style module's apply() to use; defaults to the DCF palette.
+        self._apply = styler or styles.apply
 
     # -- core write ---------------------------------------------------------
     def put(self, row, col, value=None, role="body", fmt=None, key=None, **style):
@@ -114,7 +116,7 @@ class Sheet:
         c = self.ws.cell(row=row, column=_col_idx(col))
         if value is not None:
             c.value = value
-        styles.apply(c, role, fmt=fmt, **style)
+        self._apply(c, role, fmt=fmt, **style)
         if key is not None:
             self.refs.put(key, self.name, c.coordinate)
         return c

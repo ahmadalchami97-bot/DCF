@@ -190,7 +190,7 @@ class _Parser:
                 return ("bool", True)
             if up == "FALSE":
                 return ("bool", False)
-            raise ValueError(f"unknown name {name!r}")
+            return ("name", up)  # a defined name (resolved at eval time)
         raise ValueError(f"unexpected token {v!r}")
 
     def arglist(self):
@@ -244,6 +244,19 @@ class Evaluator:
         self._memo: dict[tuple[str, str], object] = {}
         self._stack: list[tuple[str, str]] = []
         self.cycles: list[tuple[str, str]] = []
+        # workbook-level defined names (single cells or ranges) for formula use
+        self.names: dict[str, tuple[str, str]] = {}
+        try:
+            for nm, dn in self.wb.defined_names.items():
+                try:
+                    dest = list(dn.destinations)
+                except Exception:
+                    dest = []
+                if dest:
+                    sheet, coord = dest[0]
+                    self.names[nm.upper()] = (sheet, coord)
+        except Exception:
+            pass
 
     # public API
     def value(self, sheet: str, coord: str):
@@ -284,6 +297,16 @@ class Evaluator:
             return node[1]
         if tag == "blank":
             return BLANK
+        if tag == "name":
+            key = node[1]
+            if key not in self.names:
+                raise ValueError(f"unknown defined name {key!r}")
+            s, coord = self.names[key]
+            coord = coord.replace("$", "")
+            if ":" in coord:
+                a, b = coord.split(":")
+                return self._range(f"'{s}'!{a}", b, s)
+            return self.value(s, coord.upper())
         if tag == "ref":
             s, c = _split_ref(node[1])
             return self.value(s or sheet, c)

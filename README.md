@@ -7,7 +7,7 @@ polished, **fully-formula-driven, auditable Excel workbook**:
 |---|--------|---------------|--------|------|
 | 1 | **Company Analysis & DCF Valuation** (12 sheets) | `python build_model.py` | `examples/sample_company.xlsx` | this README + `docs/METHODOLOGY.md` |
 | 2 | **Institutional Financial Ratio Analysis** (15 sheets) | `python build_ratios.py` | `examples/ratio_analysis.xlsx` | [`docs/RATIOS.md`](docs/RATIOS.md) |
-| 3 | **Institutional Forecasting Engine** (10 sheets) | `python build_ife.py` | `examples/Institutional Forecasting Engine.xlsx` | [`docs/FORECASTING_ENGINE.md`](docs/FORECASTING_ENGINE.md) |
+| 3 | **Institutional Forecasting Engine** (7 sheets) | `python build_ife.py` | `examples/Institutional Forecasting Engine.xlsx` | [`docs/FORECASTING_ENGINE.md`](docs/FORECASTING_ENGINE.md) |
 
 All three share the same proven core (`dcf/utils.py` cross-sheet cell registry +
 the `tests/xlcalc.py` formula evaluator). **Part 1 is documented below;** Parts 2

@@ -513,6 +513,39 @@ class Evaluator:
                 return val
             fmt = self._eval(args[1], sheet)
             return _format_number(val, fmt if isinstance(fmt, str) else _to_text(fmt))
+        if name == "INDEX":
+            rng = self._eval(args[0], sheet)
+            vals = rng[1] if (isinstance(rng, tuple) and rng[0] == "array") else [rng]
+            k = _to_num(self._eval(args[1], sheet))
+            if isinstance(k, XlError):
+                return k
+            i = int(k)
+            if i < 1 or i > len(vals):
+                return ERR_REF
+            return vals[i - 1]
+        if name == "MATCH":
+            target = self._eval(args[0], sheet)
+            rng = self._eval(args[1], sheet)
+            vals = rng[1] if (isinstance(rng, tuple) and rng[0] == "array") else [rng]
+            mtype = 1.0 if len(args) < 3 else _to_num(self._eval(args[2], sheet))
+            if isinstance(mtype, XlError):
+                return mtype
+            if mtype == 0:
+                for i, x in enumerate(vals):
+                    if not isinstance(x, XlError) and _compare("=", x, target) is True:
+                        return float(i + 1)
+                return ERR_NA
+            tnum = _to_num(target)
+            best = None
+            for i, x in enumerate(vals):
+                xn = _to_num(x)
+                if isinstance(xn, XlError):
+                    continue
+                if mtype > 0 and xn <= tnum:
+                    best = i + 1
+                elif mtype < 0 and xn >= tnum:
+                    best = i + 1
+            return float(best) if best else ERR_NA
         if name == "ROUND":  # (defensive duplicate; handled above)
             pass
         raise ValueError(f"unsupported function {name}")

@@ -49,6 +49,11 @@ _ROLES = {
     "subheader": (_font(Palette.WHITE, 10, bold=True), _fill(Palette.SUBHEADER), A_L, B_NONE, True),
     "colhdr": (_font(Palette.WHITE, 9, bold=True), _fill(Palette.SUBHEADER), A_C, B_NONE, True),
     "colhdr_r": (_font(Palette.WHITE, 9, bold=True), _fill(Palette.SUBHEADER), A_R, B_NONE, True),
+    # actual vs forecast year headers (distinct, so the two can never be confused)
+    "actual_hdr": (_font(Palette.WHITE, 9, bold=True), _fill(Palette.ACTUAL_HDR), A_C, B_NONE, True),
+    "fcst_hdr": (_font(Palette.WHITE, 9, bold=True), _fill(Palette.FCST_HDR), A_C, B_NONE, True),
+    "actual_tag": (_font(Palette.ACTUAL_HDR, 9, bold=True), _fill(Palette.ACTUAL_FILL), A_C, B_GRID, True),
+    "fcst_tag": (_font(Palette.FCST_HDR, 9, bold=True), _fill(Palette.FCST_FILL), A_C, B_GRID, True),
     "label": (_font(Palette.TEXT, SZ), None, A_L, B_NONE, True),
     "label_b": (_font(Palette.TEXT, SZ, bold=True), None, A_L, B_NONE, True),
     "sublabel": (_font(Palette.MUTED, 9, italic=True), None, A_L, B_NONE, True),

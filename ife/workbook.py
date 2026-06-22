@@ -12,21 +12,21 @@ from .config import Palette, SHEET_ORDER
 from .sample_data import build_sample
 from .style import apply as _styler
 
-# Dependency order: Historical feeds Analysis & Assumptions; Assumptions +
-# Historical feed the Forecast; Forecast feeds Bridge/Diagnostics/Scenario/
-# Sensitivity; the Dashboard aggregates last.
+# Dependency order: Historical defines the timeline + the actual inputs;
+# Assumptions defines the drivers; the Forecast reads both; Bridge & Diagnostics
+# read the Forecast; the Methodology is text; the Dashboard aggregates last.
 BUILD_ORDER = [
-    "Historical", "Analysis", "Assumptions", "Forecast", "Bridge",
-    "Diagnostics", "Scenario", "Sensitivity", "Notes", "Dashboard",
+    "Historical", "Assumptions", "Forecast", "Bridge",
+    "Diagnostics", "Methodology", "Dashboard",
 ]
 _MODULE = {
-    "Dashboard": "dashboard", "Historical": "historical", "Analysis": "analysis",
+    "Dashboard": "dashboard", "Methodology": "methodology", "Historical": "historical",
     "Assumptions": "assumptions", "Forecast": "forecast", "Bridge": "bridge",
-    "Diagnostics": "diagnostics", "Scenario": "scenario", "Sensitivity": "sensitivity",
-    "Notes": "notes",
+    "Diagnostics": "diagnostics",
 }
-_TABS = {"Dashboard": "404040", "Historical": "1F6FB2", "Assumptions": "0000FF",
-         "Forecast": "006100", "Diagnostics": "C00000"}
+_TABS = {"Dashboard": "404040", "Methodology": "5B7286", "Historical": "39506B",
+         "Assumptions": "0000FF", "Forecast": "1F7A4D", "Bridge": "2E4A6B",
+         "Diagnostics": "C00000"}
 
 
 def assemble(data: dict | None = None):

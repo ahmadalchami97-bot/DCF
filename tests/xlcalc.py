@@ -513,6 +513,31 @@ class Evaluator:
                 return val
             fmt = self._eval(args[1], sheet)
             return _format_number(val, fmt if isinstance(fmt, str) else _to_text(fmt))
+        if name == "SQRT":
+            n = _to_num(self._eval(args[0], sheet))
+            if isinstance(n, XlError):
+                return n
+            if n < 0:
+                return ERR_NUM
+            return n ** 0.5
+        if name == "SUMPRODUCT":
+            arrays = []
+            for a in args:
+                v = self._eval(a, sheet)
+                arrays.append(v[1] if (isinstance(v, tuple) and v[0] == "array") else [v])
+            if not arrays:
+                return 0.0
+            length = max(len(a) for a in arrays)
+            total = 0.0
+            for idx in range(length):
+                prod = 1.0
+                for arr in arrays:
+                    x = _to_num(arr[idx]) if idx < len(arr) else 0.0
+                    if isinstance(x, XlError):
+                        return x
+                    prod *= x
+                total += prod
+            return total
         if name == "INDEX":
             rng = self._eval(args[0], sheet)
             vals = rng[1] if (isinstance(rng, tuple) and rng[0] == "array") else [rng]

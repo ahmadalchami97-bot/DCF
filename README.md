@@ -1,6 +1,6 @@
-# Investment-Grade Company Analysis — Four Excel Engines
+# Investment-Grade Company Analysis — Five Excel Engines
 
-This repository contains **four** modular Python engines, each generating a
+This repository contains **five** modular Python engines, each generating a
 polished, **fully-formula-driven, auditable Excel workbook**:
 
 | # | Engine | Build command | Output | Docs |
@@ -9,12 +9,16 @@ polished, **fully-formula-driven, auditable Excel workbook**:
 | 2 | **Institutional Financial Ratio Analysis** (15 sheets) | `python build_ratios.py` | `examples/ratio_analysis.xlsx` | [`docs/RATIOS.md`](docs/RATIOS.md) |
 | 3 | **Institutional Forecasting Engine** (7 sheets) | `python build_ife.py` | `examples/Institutional Forecasting Engine.xlsx` | [`docs/FORECASTING_ENGINE.md`](docs/FORECASTING_ENGINE.md) |
 | 4 | **Portfolio Allocation Optimizer + Scenario Analysis** (8 sheets) | `python build_portfolio.py` | `examples/Portfolio Allocation Optimizer.xlsx` | [`docs/PORTFOLIO_OPTIMIZER.md`](docs/PORTFOLIO_OPTIMIZER.md) |
+| 5 | **Fixed-Rate Bond Analyzer** (12 sheets) | `python build_bond.py` | `examples/Fixed-Rate Bond Analyzer.xlsx` | [`docs/BOND_ANALYZER.md`](docs/BOND_ANALYZER.md) |
 
-All four share the same proven core (`dcf/utils.py` cross-sheet cell registry +
-the `tests/xlcalc.py` formula evaluator). **Part 1 is documented below;** Parts 2,
-3 and 4 have their own guides ([`docs/RATIOS.md`](docs/RATIOS.md),
+All five share the same core (`dcf/utils.py` cross-sheet cell registry; most are
+verified by the `tests/xlcalc.py` formula evaluator). **Part 1 is documented
+below;** Parts 2-5 have their own guides ([`docs/RATIOS.md`](docs/RATIOS.md),
 [`docs/FORECASTING_ENGINE.md`](docs/FORECASTING_ENGINE.md),
-[`docs/PORTFOLIO_OPTIMIZER.md`](docs/PORTFOLIO_OPTIMIZER.md)).
+[`docs/PORTFOLIO_OPTIMIZER.md`](docs/PORTFOLIO_OPTIMIZER.md),
+[`docs/BOND_ANALYZER.md`](docs/BOND_ANALYZER.md)). The Bond Analyzer uses Excel's
+native bond functions (`YIELD`, `PRICE`, `DURATION`, ...) and is verified by an
+independent Python reference (`bond/bondmath.py`) plus its own in-workbook audit sheet.
 
 ---
 

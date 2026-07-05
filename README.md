@@ -1,6 +1,6 @@
-# Investment-Grade Company Analysis — Seven Excel Engines
+# Investment-Grade Company Analysis — Eight Excel Engines
 
-This repository contains **seven** modular Python engines, each generating a
+This repository contains **eight** modular Python engines, each generating a
 polished, **fully-formula-driven, auditable Excel workbook**:
 
 | # | Engine | Build command | Output | Docs |
@@ -12,18 +12,21 @@ polished, **fully-formula-driven, auditable Excel workbook**:
 | 5 | **Fixed-Rate Bond Analyzer** (12 sheets) | `python build_bond.py` | `examples/Fixed-Rate Bond Analyzer.xlsx` | [`docs/BOND_ANALYZER.md`](docs/BOND_ANALYZER.md) |
 | 6 | **US Treasury Bond Analyzer** (12 sheets) | `python build_ustreasury.py` | `examples/US Treasury Bond Analyzer.xlsx` | [`docs/US_TREASURY_ANALYZER.md`](docs/US_TREASURY_ANALYZER.md) |
 | 7 | **Government Bond Analyzer** (12 sheets) | `python build_govbond.py` | `examples/Government Bond Analyzer.xlsx` | [`docs/GOVBOND_ANALYZER.md`](docs/GOVBOND_ANALYZER.md) |
+| 8 | **Government Bond Course & Calculator** (18 sheets) | `python build_bondcourse.py` | `examples/Government Bond Course & Calculator.xlsx` | [`docs/BONDCOURSE.md`](docs/BONDCOURSE.md) |
 
-All seven share the same core (`dcf/utils.py` cross-sheet cell registry; most are
+All eight share the same core (`dcf/utils.py` cross-sheet cell registry; most are
 verified by the `tests/xlcalc.py` formula evaluator). **Part 1 is documented
-below;** Parts 2-7 have their own guides ([`docs/RATIOS.md`](docs/RATIOS.md),
+below;** Parts 2-8 have their own guides ([`docs/RATIOS.md`](docs/RATIOS.md),
 [`docs/FORECASTING_ENGINE.md`](docs/FORECASTING_ENGINE.md),
 [`docs/PORTFOLIO_OPTIMIZER.md`](docs/PORTFOLIO_OPTIMIZER.md),
 [`docs/BOND_ANALYZER.md`](docs/BOND_ANALYZER.md),
 [`docs/US_TREASURY_ANALYZER.md`](docs/US_TREASURY_ANALYZER.md),
-[`docs/GOVBOND_ANALYZER.md`](docs/GOVBOND_ANALYZER.md)). The three bond engines use
+[`docs/GOVBOND_ANALYZER.md`](docs/GOVBOND_ANALYZER.md),
+[`docs/BONDCOURSE.md`](docs/BONDCOURSE.md)). The four bond engines use
 Excel's native bond functions (`YIELD`, `PRICE`, `DURATION`, ...) and are verified
 by a shared independent Python reference (`bond/bondmath.py`) plus their own
-in-workbook audit sheets.
+in-workbook audit sheets. Engine 8 is a beginner-first teaching workbook: it
+explains every concept in plain English before it calculates it.
 
 ---
 

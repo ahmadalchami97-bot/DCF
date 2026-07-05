@@ -32,8 +32,8 @@ Terms**; everything else updates automatically.
 | 6 | **Rate Shock** | Estimated clean-price impact at -100/-50/-25/+25/+50/+100 bps, by duration only and duration + convexity. |
 | 7 | **Yield Curve** | Enter the 3m/2y/5y/10y/30y Treasury yields; a line chart, the bond's maturity bucket, and a normal/flat/inverted read. |
 | 8 | **Risk Summary** | A Treasury-specific Low/Medium/High checklist (interest-rate, duration, reinvestment, inflation, opportunity, liquidity, curve). |
-| 9 | **Recommendation** | One-page summary + automatic hints + suitability guidance. The Buy/Hold/Avoid call stays a manual input. |
-| 10 | **Formula Explanations** | Every calculation in plain English: formula, meaning, and how to read it. |
+| 9 | **Recommendation** | One-page summary + hints, an **Investment Attractiveness View** (a transparent /10 score with a rate-outlook link and analyst override), and a manual Buy/Hold/Avoid call. |
+| 10 | **Formula & Concept Explanations** | Every key idea in beginner language: the formula, a plain explanation, why it matters for a Treasury analyst, how to interpret it, and a simple example. |
 | 11 | **Audit** | Independent re-checks (Excel bond functions, bump-and-reprice, the schedule, date/frequency/sanity tests) with Pass/Warning/Fail. |
 | 12 | **Limitations** | What is out of scope and possible future upgrades. |
 
@@ -54,6 +54,18 @@ Rate shock: price change ~ -Modified x (dy) + 0.5 x convexity x (dy)^2
 **Supported:** fixed-coupon Treasury notes/bonds (semiannual) and zero-coupon
 Treasury bills. Face = 100, prices per 100 face, day-count = **Actual/Actual** (the
 Treasury convention).
+
+### Investment Attractiveness View (Recommendation sheet)
+
+A simple, transparent framework that answers "is this bond a good investment?"
+without pretending to know your situation. It scores five categories to a total of
+10 — **yield attractiveness /3, duration/rate risk /3, price sensitivity (DV01) /2,
+yield-curve context /1, liquidity/simplicity /1** — and classifies **8-10 =
+Attractive, 5-7 = Neutral, 0-4 = Not Attractive**, with a plain-English main reason,
+a key supporting factor and a key risk. A **rate-outlook** selector (yields
+rise/fall/stable) adds directional context, and the model's suggestion is fully
+**overridable** by the analyst. It is explicitly framed as a structured view, not a
+personalised recommendation.
 
 **Not covered (Limitations sheet):** corporate bonds, credit spreads, callable
 bonds, floaters, TIPS, STRIPS complexity, repo/futures, key-rate duration, curve

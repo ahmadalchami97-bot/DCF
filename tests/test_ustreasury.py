@@ -79,7 +79,8 @@ def test_workbook_builds_and_wires_up():
         wb2 = openpyxl.load_workbook(path)
         assert len(wb2.sheetnames) == 12
         for nm in ("SecType", "Settle", "Maturity", "YTM", "Dirty", "MacDur", "ModDur",
-                   "Convexity", "DV01", "Spread", "Y10Y", "Y2Y", "FreqWarn", "YearsToMat"):
+                   "Convexity", "DV01", "Spread", "Y10Y", "Y2Y", "FreqWarn", "YearsToMat",
+                   "AttractScore", "ModelView", "RateOutlook", "AnalystOverride"):
             assert nm in wb2.defined_names, f"missing named range {nm}"
 
 

@@ -1,6 +1,6 @@
-# Investment-Grade Company Analysis — Six Excel Engines
+# Investment-Grade Company Analysis — Seven Excel Engines
 
-This repository contains **six** modular Python engines, each generating a
+This repository contains **seven** modular Python engines, each generating a
 polished, **fully-formula-driven, auditable Excel workbook**:
 
 | # | Engine | Build command | Output | Docs |
@@ -11,17 +11,19 @@ polished, **fully-formula-driven, auditable Excel workbook**:
 | 4 | **Portfolio Allocation Optimizer + Scenario Analysis** (8 sheets) | `python build_portfolio.py` | `examples/Portfolio Allocation Optimizer.xlsx` | [`docs/PORTFOLIO_OPTIMIZER.md`](docs/PORTFOLIO_OPTIMIZER.md) |
 | 5 | **Fixed-Rate Bond Analyzer** (12 sheets) | `python build_bond.py` | `examples/Fixed-Rate Bond Analyzer.xlsx` | [`docs/BOND_ANALYZER.md`](docs/BOND_ANALYZER.md) |
 | 6 | **US Treasury Bond Analyzer** (12 sheets) | `python build_ustreasury.py` | `examples/US Treasury Bond Analyzer.xlsx` | [`docs/US_TREASURY_ANALYZER.md`](docs/US_TREASURY_ANALYZER.md) |
+| 7 | **Government Bond Analyzer** (12 sheets) | `python build_govbond.py` | `examples/Government Bond Analyzer.xlsx` | [`docs/GOVBOND_ANALYZER.md`](docs/GOVBOND_ANALYZER.md) |
 
-All six share the same core (`dcf/utils.py` cross-sheet cell registry; most are
+All seven share the same core (`dcf/utils.py` cross-sheet cell registry; most are
 verified by the `tests/xlcalc.py` formula evaluator). **Part 1 is documented
-below;** Parts 2-6 have their own guides ([`docs/RATIOS.md`](docs/RATIOS.md),
+below;** Parts 2-7 have their own guides ([`docs/RATIOS.md`](docs/RATIOS.md),
 [`docs/FORECASTING_ENGINE.md`](docs/FORECASTING_ENGINE.md),
 [`docs/PORTFOLIO_OPTIMIZER.md`](docs/PORTFOLIO_OPTIMIZER.md),
 [`docs/BOND_ANALYZER.md`](docs/BOND_ANALYZER.md),
-[`docs/US_TREASURY_ANALYZER.md`](docs/US_TREASURY_ANALYZER.md)). The two bond
-engines use Excel's native bond functions (`YIELD`, `PRICE`, `DURATION`, ...) and
-are verified by an independent Python reference (`bond/bondmath.py`, shared by the
-Treasury engine) plus their own in-workbook audit sheets.
+[`docs/US_TREASURY_ANALYZER.md`](docs/US_TREASURY_ANALYZER.md),
+[`docs/GOVBOND_ANALYZER.md`](docs/GOVBOND_ANALYZER.md)). The three bond engines use
+Excel's native bond functions (`YIELD`, `PRICE`, `DURATION`, ...) and are verified
+by a shared independent Python reference (`bond/bondmath.py`) plus their own
+in-workbook audit sheets.
 
 ---
 

@@ -21,3 +21,8 @@ venv/
 # Generated verification artifacts (the canonical sample is committed separately)
 /tmp_build/
 *.recalc.xlsx
+
+# Standalone football prediction project (a separate deliverable, not part of the
+# Excel-engines repo). Kept off this branch to avoid polluting it; can be committed
+# to its own branch or zipped on request.
+football_prediction/

@@ -1,6 +1,6 @@
-# Investment-Grade Company Analysis — Eight Excel Engines
+# Investment-Grade Company Analysis — Nine Excel Engines
 
-This repository contains **eight** modular Python engines, each generating a
+This repository contains **nine** modular Python engines, each generating a
 polished, **fully-formula-driven, auditable Excel workbook**:
 
 | # | Engine | Build command | Output | Docs |
@@ -13,20 +13,25 @@ polished, **fully-formula-driven, auditable Excel workbook**:
 | 6 | **US Treasury Bond Analyzer** (12 sheets) | `python build_ustreasury.py` | `examples/US Treasury Bond Analyzer.xlsx` | [`docs/US_TREASURY_ANALYZER.md`](docs/US_TREASURY_ANALYZER.md) |
 | 7 | **Government Bond Analyzer** (12 sheets) | `python build_govbond.py` | `examples/Government Bond Analyzer.xlsx` | [`docs/GOVBOND_ANALYZER.md`](docs/GOVBOND_ANALYZER.md) |
 | 8 | **Government Bond Course & Calculator** (18 sheets) | `python build_bondcourse.py` | `examples/Government Bond Course & Calculator.xlsx` | [`docs/BONDCOURSE.md`](docs/BONDCOURSE.md) |
+| 9 | **Macro Market Intelligence System** — core (6 sheets) | `python build_macro.py` | `examples/Macro Market Intelligence System.xlsx` | [`docs/MACRO_INTELLIGENCE_SYSTEM.md`](docs/MACRO_INTELLIGENCE_SYSTEM.md) |
 
-All eight share the same core (`dcf/utils.py` cross-sheet cell registry; most are
+All nine share the same core (`dcf/utils.py` cross-sheet cell registry; most are
 verified by the `tests/xlcalc.py` formula evaluator). **Part 1 is documented
-below;** Parts 2-8 have their own guides ([`docs/RATIOS.md`](docs/RATIOS.md),
+below;** Parts 2-9 have their own guides ([`docs/RATIOS.md`](docs/RATIOS.md),
 [`docs/FORECASTING_ENGINE.md`](docs/FORECASTING_ENGINE.md),
 [`docs/PORTFOLIO_OPTIMIZER.md`](docs/PORTFOLIO_OPTIMIZER.md),
 [`docs/BOND_ANALYZER.md`](docs/BOND_ANALYZER.md),
 [`docs/US_TREASURY_ANALYZER.md`](docs/US_TREASURY_ANALYZER.md),
 [`docs/GOVBOND_ANALYZER.md`](docs/GOVBOND_ANALYZER.md),
-[`docs/BONDCOURSE.md`](docs/BONDCOURSE.md)). The four bond engines use
+[`docs/BONDCOURSE.md`](docs/BONDCOURSE.md),
+[`docs/MACRO_INTELLIGENCE_SYSTEM.md`](docs/MACRO_INTELLIGENCE_SYSTEM.md)). The four bond engines use
 Excel's native bond functions (`YIELD`, `PRICE`, `DURATION`, ...) and are verified
 by a shared independent Python reference (`bond/bondmath.py`) plus their own
 in-workbook audit sheets. Engine 8 is a beginner-first teaching workbook: it
-explains every concept in plain English before it calculates it.
+explains every concept in plain English before it calculates it. Engine 9 is a
+macro-strategy desk: its **core build** (data-surprise + Fed-bias scoring) is here
+now; `docs/MACRO_INTELLIGENCE_SYSTEM.md` is the full 18-sheet architecture the rest
+extends.
 
 ---
 

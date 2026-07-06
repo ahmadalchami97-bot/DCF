@@ -8,6 +8,15 @@ your exposures* (USD, US Treasuries, equities, gold, oil, Kuwait/GCC). It is bui
 for monitoring and decision support, and for explaining a view to senior
 management in under a minute.
 
+> **Build status.** The **core engine (Phase 1–2)** of this design is built and
+> shipping: six live-formula sheets — Cover, Settings, Impact Library (21
+> indicators), Data Tracker, Data Surprise Engine, and Fed & Central Bank Tracker.
+> Run `python build_macro.py` (or `--blank` for an empty template); verified by
+> `tests/test_macro.py`. The remaining sheets in this spec (market modules,
+> cross-asset matrix, scenario engine, regime classifier, portfolio link,
+> watchlist, and the executive dashboard) are the next phases and extend the same
+> named-range wiring described below.
+
 **Design principle:** the workbook separates three layers, and every number flows
 one way through them:
 

@@ -1,6 +1,6 @@
-# Investment-Grade Company Analysis — Nine Excel Engines
+# Investment-Grade Company Analysis — Ten Excel Engines
 
-This repository contains **nine** modular Python engines, each generating a
+This repository contains **ten** modular Python engines, each generating a
 polished, **fully-formula-driven, auditable Excel workbook**:
 
 | # | Engine | Build command | Output | Docs |
@@ -14,8 +14,9 @@ polished, **fully-formula-driven, auditable Excel workbook**:
 | 7 | **Government Bond Analyzer** (12 sheets) | `python build_govbond.py` | `examples/Government Bond Analyzer.xlsx` | [`docs/GOVBOND_ANALYZER.md`](docs/GOVBOND_ANALYZER.md) |
 | 8 | **Government Bond Course & Calculator** (18 sheets) | `python build_bondcourse.py` | `examples/Government Bond Course & Calculator.xlsx` | [`docs/BONDCOURSE.md`](docs/BONDCOURSE.md) |
 | 9 | **Macro Market Intelligence System** — core (6 sheets) | `python build_macro.py` | `examples/Macro Market Intelligence System.xlsx` | [`docs/MACRO_INTELLIGENCE_SYSTEM.md`](docs/MACRO_INTELLIGENCE_SYSTEM.md) |
+| 10 | **Macro Impact Library & Global Stress Index** (2 sheets) | `python build_macrolib.py` | `examples/Macro Impact Library & Stress Index.xlsx` | self-documented in-workbook |
 
-All nine share the same core (`dcf/utils.py` cross-sheet cell registry; most are
+All ten share the same core (`dcf/utils.py` cross-sheet cell registry; most are
 verified by the `tests/xlcalc.py` formula evaluator). **Part 1 is documented
 below;** Parts 2-9 have their own guides ([`docs/RATIOS.md`](docs/RATIOS.md),
 [`docs/FORECASTING_ENGINE.md`](docs/FORECASTING_ENGINE.md),
@@ -31,7 +32,10 @@ in-workbook audit sheets. Engine 8 is a beginner-first teaching workbook: it
 explains every concept in plain English before it calculates it. Engine 9 is a
 macro-strategy desk: its **core build** (data-surprise + Fed-bias scoring) is here
 now; `docs/MACRO_INTELLIGENCE_SYSTEM.md` is the full 18-sheet architecture the rest
-extends.
+extends. Engine 10 is the deliberately simple, practical alternative: a two-sheet
+macro cheat sheet (~63 indicators) plus a formula-driven 0–100 Global Stress /
+Fear Index — self-documented in the workbook (colour legend + classification
+bands), no separate guide needed.
 
 ---
 
